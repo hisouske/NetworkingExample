@@ -1,0 +1,9 @@
+package com.cj4dplex.test.udpServer;
+
+public class udpServerMain {
+
+	public static void main(String[] args) {
+
+	}
+
+}

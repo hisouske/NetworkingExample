@@ -1,0 +1,9 @@
+package udpClient;
+
+public class udpClientMain {
+
+	public static void main(String[] args) {
+		udpClient udpclient = new udpClient("localhost", 6000);
+	}
+
+}

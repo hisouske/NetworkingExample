@@ -1,0 +1,75 @@
+package com.cj4dplex.test.udpResource;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.Socket;
+import javax.swing.JTextArea;
+
+public class Receive {
+
+	private static int bufferSize = 1024;
+
+	public static final Runnable UdpReceive(DatagramSocket socket) {
+		
+		return new Runnable() {
+			String message = null;
+
+			@Override
+			public void run() {
+
+				while (true) {
+					try {
+						DatagramPacket receivePacket = new DatagramPacket(new byte[bufferSize], bufferSize);
+						socket.receive(receivePacket);
+						message = new String(receivePacket.getData(), 0, receivePacket.getLength(), "UTF-8");
+						System.out.println(message);
+						try {
+							Thread.sleep(500);
+						} catch (InterruptedException e) {
+							e.printStackTrace();
+						}
+					} catch (IOException e) {
+						socket.close();
+						e.printStackTrace();
+					}
+				}
+			}
+		};
+	}
+
+	public static final Runnable TcpReceive(Socket socket, JTextArea textarea) {
+		return new Runnable() {
+			@Override
+			public void run() {
+				String msg = null;
+				InputStreamReader inputStreamReader = null;
+				BufferedReader bufferedReader = null;
+				PrintWriter printWriter = null;
+
+				try {
+					bufferedReader = new BufferedReader(inputStreamReader);
+					inputStreamReader = new InputStreamReader(socket.getInputStream());
+					printWriter = new PrintWriter(socket.getOutputStream());
+					while ((msg = bufferedReader.readLine()) != null) {
+						textarea.append(msg + "\n");
+						System.out.println(msg);
+					}
+				} catch (IOException e) {
+					try {
+						inputStreamReader.close();
+						bufferedReader.close();
+						printWriter.close();
+						socket.close();
+					} catch (IOException e1) {
+						e1.printStackTrace();
+					}
+				}
+
+			}
+		};
+	}
+}

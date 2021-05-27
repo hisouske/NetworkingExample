@@ -1,0 +1,43 @@
+package udpClient;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetSocketAddress;
+import java.net.SocketException;
+import java.util.Scanner;
+import udpClient.Send;
+
+public class udpClient {
+	public static String serverIP = "localhost";
+	public static int port = 6000;
+	public static int bufferSize = 1024;
+
+	public static void main(String[] args) {
+		DatagramSocket socket = null;
+		Scanner scanner = null;
+		try {
+			scanner = new Scanner(System.in);
+			socket = new DatagramSocket();
+
+			Thread thread = new Thread(Receive.UdpReceive(socket), "UDP Receive");
+			thread.start();
+			Send.UdpSend("입장", port, socket);
+
+			while (true) {
+				System.out.println("입력 :");
+				String message = scanner.nextLine();
+				Send.UdpSend(message, port, socket);
+			}
+		} catch (SocketException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (socket != null && socket.isClosed() == false) {
+				socket.close();
+			}
+			scanner.close();
+		}
+	}
+}

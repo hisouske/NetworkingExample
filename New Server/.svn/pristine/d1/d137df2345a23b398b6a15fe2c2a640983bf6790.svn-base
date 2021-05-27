@@ -1,0 +1,67 @@
+package com.cj4dplex.test.udpServer;
+
+import java.io.IOException;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.SocketException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import com.cj4dplex.test.server.ServerResource;
+import com.cj4dplex.test.serverif.ServerConnection;
+
+public class udpServer implements ServerConnection{
+
+	public static int port = 6000;
+	public static int bufferSize = 1024;
+
+	ArrayList packetList = new ArrayList<DatagramPacket>();
+	DatagramSocket socket = null;
+
+	udpServer() {
+
+		try {
+			socket = new DatagramSocket(port);
+			DatagramPacket receivePacket = new DatagramPacket(new byte[bufferSize], bufferSize);
+			while (true) {
+				socket.receive(receivePacket);
+				packetList.add(receivePacket);
+				String message = new String(receivePacket.getData(), 0, receivePacket.getLength(), "UTF-8");
+				System.out.println(message);
+
+				
+				
+				Send.UdpSend(message,port,socket);
+				byte[] sendData = message.getBytes("UTF-8");
+
+				for (Object i : packetAddress.keySet()) {
+					System.out.println(packetAddress.get(i) + "///" + i);
+					DatagramPacket sendPacket = new DatagramPacket(sendData, sendData.length,
+							(InetAddress) packetAddress.get(i), (int) i);
+					socket.send(sendPacket);
+				}
+
+			}
+		} catch (SocketException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+			if (socket != null && socket.isClosed() == false) {
+				socket.close();
+			}
+		}
+	}
+
+	@Override
+	public void serverStart(int port) throws IOException {
+		
+	}
+
+	@Override
+	public void serverStop() throws IOException {
+		
+	}
+}

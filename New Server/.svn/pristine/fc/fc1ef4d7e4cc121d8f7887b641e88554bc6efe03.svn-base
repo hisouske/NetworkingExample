@@ -1,0 +1,17 @@
+package com.cj4dplex.test.udpController;
+
+import com.cj4dplex.test.servergui.ServerView;
+import com.cj4dplex.test.udpServer.UdpServer;
+
+public class Controller {
+	ServerView serverView = new ServerView();
+	UdpServer udpServer = null;
+
+	public Controller(UdpServer server) {
+		serverView.setVisible(true);
+		System.out.print(server);
+		this.udpServer = server;
+
+	}
+
+}
