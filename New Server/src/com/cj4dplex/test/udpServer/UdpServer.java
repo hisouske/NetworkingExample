@@ -1,4 +1,4 @@
-package com.cj4dplex.test.udpServer;
+package com.cj4dplex.test.udpserver;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
@@ -6,7 +6,7 @@ import java.net.SocketException;
 
 import javax.swing.JTextArea;
 
-import com.cj4dplex.test.udpFunc.ServerReceive;
+import com.cj4dplex.test.function.ServerReceive;
 
 public class UdpServer {
 

@@ -1,8 +1,8 @@
-package com.cj4dplex.test.udpServer;
+package com.cj4dplex.test.udpserver;
 
 
 
-import com.cj4dplex.test.udpController.Controller;
+import com.cj4dplex.test.ucontroller.Controller;
 
 public class UdpServerMain {
 

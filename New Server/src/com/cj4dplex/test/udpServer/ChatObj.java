@@ -1,6 +1,6 @@
-package com.cj4dplex.test.udpServer;
+package com.cj4dplex.test.udpserver;
 
-import com.cj4dplex.test.server.ServerResource;
+import com.cj4dplex.test.tcpserver.ServerResource;
 
 public class ChatObj {
 	private String Chat = null;

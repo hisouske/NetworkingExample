@@ -1,8 +1,8 @@
-package com.cj4dplex.test.udpServer;
+package com.cj4dplex.test.udpserver;
 
 import java.util.ArrayList;
 
-import com.cj4dplex.test.udpFunc.ClientVO;
+import com.cj4dplex.test.ufunction.ClientVO;
 
 public class UdpResource {
 

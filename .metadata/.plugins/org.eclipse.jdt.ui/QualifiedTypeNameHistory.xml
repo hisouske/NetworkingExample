@@ -1,2 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<qualifiedTypeNameHistroy/>
+<qualifiedTypeNameHistroy>
+<fullyQualifiedTypeName name="com.cj4dplex.test.clientgui.ClientView"/>
+<fullyQualifiedTypeName name="com.cj4dplex.test.function.ServerReceive"/>
+<fullyQualifiedTypeName name="java.io.InputStream"/>
+<fullyQualifiedTypeName name="com.cj4dplex.test.tcpserver.ServerResource"/>
+<fullyQualifiedTypeName name="com.cj4dplex.test.servergui.ServerView"/>
+<fullyQualifiedTypeName name="java.io.OutputStream"/>
+</qualifiedTypeNameHistroy>

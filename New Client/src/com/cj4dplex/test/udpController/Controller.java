@@ -1,4 +1,4 @@
-package com.cj4dplex.test.udpController;
+package com.cj4dplex.test.udpcontroller;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -6,8 +6,7 @@ import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 
 import com.cj4dplex.test.clientgui.ClientView;
-
-import udpClient.UdpClient;
+import com.cj4dplex.test.udpclient.UdpClient;
 
 public class Controller implements ActionListener, WindowListener {
 	private ClientView clientView = null;
