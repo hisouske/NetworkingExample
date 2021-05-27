@@ -38,7 +38,7 @@ public class ServerReceive {
 
 							inClient = new InClient(receivePacket);
 							textarea.append(message + "\n");
-							System.out.println("@@ServerReceive" + message);
+							System.out.println(message);
 
 							for (ClientVO client : UdpResource.getInstance().getClientList()) {
 								Send.UdpSend(message, client.getPort(), socket);
@@ -60,13 +60,21 @@ public class ServerReceive {
 			public void run() {
 				int size = -1;
 				OutputStream outputStream = null;
+				System.out.println("##inputstream checkin1 = " + inputStream);
 				try {
-					while ((size = inputStream.read()) != -1) {
+					//System.out.println("##inputstream first = " + inputStream.read());
+					//while ((size = inputStream.read()) != -1) {
+					while (inputStream != null) {
+						System.out.println("##inputstream checkin2 = " + inputStream);
+						//System.out.println("##inputstream = " + inputStream.read());
 						byte[] bt = new byte[256];
 
 						size = inputStream.read(bt);
-						String output = new String(bt, 0, size, "UTF-8");
-						System.out.println(output);
+						System.out.println(size);
+						
+						String output = new String(bt, 0, size, "utf-8");
+						
+						System.out.println("@@ServerReceive = " + output);
 						textarea.append(output+"\n");
 						for (Integer i : ServerResource.getInstance().getClientList().keySet()) {
 

@@ -10,6 +10,7 @@ import java.net.DatagramSocket;
 import java.net.Socket;
 import javax.swing.JTextArea;
 
+
 public class ClientReceive {
 
 	public static final Runnable UdpReceive(DatagramSocket socket, DatagramPacket receivePacket, JTextArea textarea) {
@@ -43,14 +44,17 @@ public class ClientReceive {
 				byte[] bt = new byte[256];
 				int size = -1;
 				try {
-					while ((size = inputStream.read()) != -1) {
-
+					while (null != inputStream) {
 						size = inputStream.read(bt);
 						String output = new String(bt, 0, size, "UTF-8");
 						System.out.println(output);
 						textArea.append(output+"\n");
 					}
 				} catch (IOException e) {
+					System.out.println("서버종료되었습니다");
+					
+//					inputStream.close();
+//					interrupt();
 					e.printStackTrace();
 				}
 			}

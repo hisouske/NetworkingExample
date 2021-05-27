@@ -34,6 +34,8 @@ public class ServerService {
 
 		inputStream = socket.getInputStream();
 
+		System.out.println("**ServerService inputStream = "+inputStream);
+
 	}
 
 	public void receiveReady(JTextArea textArea) {

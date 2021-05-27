@@ -132,6 +132,9 @@ public class ClientService {
 		this.textarea = textArea;
 		thread = new Thread(ClientReceive.TcpReceive(inputStream, textArea));
 		thread.start();
+		
+		
+
 	}
 
 }
