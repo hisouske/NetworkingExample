@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import com.cj4dplex.test.udpserver.UdpResource;
 import com.cj4dplex.test.udpserver.UdpServer;
 
-public class InClient {
+public class UdpInClient {
 
-	public InClient(DatagramPacket receivePacket) {
+	public UdpInClient(DatagramPacket receivePacket) {
 
 		boolean flag = true;
 
@@ -18,6 +18,12 @@ public class InClient {
 		// } else {
 		// UdpResource.getInstance().getClientList().add(newClient);
 		// }
+		
+//		 for (K key : map.keySet()) {
+//	            if (value.equals(map.get(key))) {
+//	                return key;
+//	            }
+//	        }
 
 		for (ClientVO client : UdpResource.getInstance().getClientList()) {
 			if (client.getPort() == receivePacket.getPort() && receivePacket.getAddress() == client.getAddress()) {

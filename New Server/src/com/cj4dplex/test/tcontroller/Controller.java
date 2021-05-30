@@ -10,9 +10,13 @@ import java.util.TreeMap;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
+import com.cj4dplex.test.function.Send;
 import com.cj4dplex.test.servergui.ServerView;
 import com.cj4dplex.test.serverif.ServerInterface;
+import com.cj4dplex.test.tcpserver.ServerResource;
 import com.cj4dplex.test.tcpserver.ServerService;
+import com.cj4dplex.test.tfunction.TcpClientListUpdate;
+import com.cj4dplex.test.tfunction.TcpServerDisconnection;
 
 public class Controller implements ActionListener, WindowListener {
 
@@ -22,7 +26,10 @@ public class Controller implements ActionListener, WindowListener {
 	public Controller(ServerView sv, ServerService ss) {
 		this.serverService = ss;
 		this.serverView = sv;
+		serverView.addWindowListener(this);
+
 		serverService.receiveReady(serverView.textarea);
+		serverService.userAreaReady(serverView.userarea);
 	}
 
 	public void setUserArea(TreeMap<Integer, Socket> clientList) {
@@ -49,13 +56,24 @@ public class Controller implements ActionListener, WindowListener {
 
 	@Override
 	public void windowClosing(WindowEvent e) {
+		System.out.println("서버 종료 ");
+		try {
+			serverService.thread.sleep(50);
+			serverService.socket.close();
+			serverService.thread.interrupt();
+			for (Integer i : ServerResource.getInstance().getClientList().keySet()) {
+
+				ServerResource.getInstance().getClientList().get(i).close();
+
+			}
+		} catch (InterruptedException | IOException e1) {
+			e1.printStackTrace();
+		}
 
 	}
 
 	@Override
 	public void windowClosed(WindowEvent e) {
-		// serverService.msgSend("#serverExit#");
-
 	}
 
 	@Override

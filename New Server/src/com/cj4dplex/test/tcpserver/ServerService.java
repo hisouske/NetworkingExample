@@ -1,48 +1,60 @@
 package com.cj4dplex.test.tcpserver;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+import java.io.OutputStream;
 import java.net.Socket;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 import javax.swing.JTextArea;
 
+import com.cj4dplex.test.function.Send;
 import com.cj4dplex.test.function.ServerReceive;
 import com.cj4dplex.test.serverif.ServerInterface;
+import com.cj4dplex.test.tfunction.TcpClientListUpdate;
 
 public class ServerService {
 	private int clientNum;
-	private Socket socket = null;
+	public Socket socket = null;
 
 	private JTextArea textArea = null;
 	private JTextArea userArea = null;
-
-	private Thread thread = null;
-	// private int timeout = 3000;
-	private InputStream inputStream = null;
+	private TcpClientListUpdate tcpClientListUpdate = null;
+	public Thread thread = null;
+	// private int timeout = 30000;
+	private OutputStream outputStream = null;
 
 	public ServerService(int cNum) throws IOException {
 		this.clientNum = cNum;
 		this.socket = ServerResource.getInstance().getClientList().get(clientNum);
 		// socket.setSoTimeout(timeout);
 		// 지정 된 시간만큼 기다렸다가 Exception으로 빠짐
-
-		inputStream = socket.getInputStream();
-
-		System.out.println("**ServerService inputStream = "+inputStream);
+		tcpClientListUpdate = TcpClientListUpdate.getInstance();
 
 	}
 
 	public void receiveReady(JTextArea textArea) {
 		this.textArea = textArea;
-		thread = new Thread(ServerReceive.TcpReceive(inputStream, textArea));
+		thread = new Thread(ServerReceive.TcpReceive(clientNum, textArea));
 		thread.start();
 
 	}
+
+	public void userAreaReady(JTextArea userArea) {
+		tcpClientListUpdate.setUserArea(userArea);
+		tcpClientListUpdate.listUpdate();
+
+	}
+
+//	public void Send(String output) {
+//		for (Integer i : ServerResource.getInstance().getClientList().keySet()) {
+//			try {
+//				outputStream = ServerResource.getInstance().getClientList().get(i).getOutputStream();
+//				Send.TcpSend(output, outputStream);
+//				outputStream.close();
+//			} catch (IOException e) {
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 
 }

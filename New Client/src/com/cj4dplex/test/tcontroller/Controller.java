@@ -22,8 +22,6 @@ public class Controller implements ActionListener, WindowListener {
 	private ClientView clientView = null;
 	private ClientService clientService = null;
 	private String getTextField = "";
-	// private Future future = null;
-	// private boolean flag = true;
 
 	public Controller(ClientService cs) {
 		this.clientService = cs;
@@ -35,35 +33,10 @@ public class Controller implements ActionListener, WindowListener {
 		clientView.btnSend.addActionListener(this);
 
 		clientService.receiveReady(clientView.textArea);
-		// this.thread = new Thread(this.setTextArea(), "GUI Client TextArea Receive");
-		// thread.start();
+
 
 	}
 
-	// public Runnable setTextArea() {
-	//
-	// return new Runnable() {
-	// @Override
-	// public void run() {
-	// while (flag) {
-	// try {
-	// future = clientService.executor.submit(clientService.callable);
-	// clientView.textArea.append(future.get() + "\n");
-	// if (null == future.get()) {
-	// flag = false;
-	// }
-	// } catch (InterruptedException | ExecutionException e) {
-	// flag = false;
-	//
-	// }
-	// }
-	// }
-	// };
-	//
-	// }
-//	public void setTextArea() {
-//		clientService.setTextArea(clientView.textArea);
-//	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -71,7 +44,9 @@ public class Controller implements ActionListener, WindowListener {
 		if (e.getSource() == clientView.btnSend) {
 			getTextField = clientView.textField.getText();
 			System.out.println(getTextField);
+			//이슈 = clientService.msgSend가 서버쪽에서 종료시 닫히도록 수정 요청
 			clientService.msgSend(getTextField);
+			//if(clientService.inpu)
 			clientView.textField.setText("");
 		}
 
@@ -84,8 +59,7 @@ public class Controller implements ActionListener, WindowListener {
 
 	@Override
 	public void windowClosing(WindowEvent e) {
-		clientService.msgSend("#종료#");
-		clientService.thread.interrupt();
+		clientService.msgSend("#exit#");
 		try {
 			clientService.thread.sleep(50);
 		} catch (InterruptedException e1) {

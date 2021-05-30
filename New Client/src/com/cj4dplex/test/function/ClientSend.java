@@ -21,7 +21,7 @@ public class ClientSend {
 			e.printStackTrace();
 		}
 	}
-
+	//*이슈 = ClientSend error 서버 종료시에도 클라이언트 send 메서드 실행
 	public static final void TcpSend(String tcpMsg, OutputStream outputStream) {
 		try {
 			
@@ -32,14 +32,12 @@ public class ClientSend {
 			for(int i =0; i<bt.length; i++) {
 				System.out.print("@@Client TcpSend bt = "+bt[i]+ " ");
 			}
-			//decode = new String(bt, "UFT-8");
-		
-			//System.out.println("@@decode = "+decode);
-			
+	
 			outputStream.write(bt);
 			System.out.println("@@Client TcpSend = "+outputStream.toString());
 			outputStream.flush();
 		} catch (Exception e) {
+			//outputStream.close();
 			e.printStackTrace();
 		}
 

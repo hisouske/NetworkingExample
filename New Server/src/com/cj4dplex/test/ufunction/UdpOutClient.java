@@ -4,8 +4,8 @@ import java.net.DatagramPacket;
 
 import com.cj4dplex.test.udpserver.UdpResource;
 
-public class OutClient {
-	public OutClient(DatagramPacket outClient) {
+public class UdpOutClient {
+	public UdpOutClient(DatagramPacket outClient) {
 
 		for (ClientVO client : UdpResource.getInstance().getClientList()) {
 			if (client.getPort() == outClient.getPort() && outClient.getAddress() == client.getAddress()) {

@@ -1,29 +1,27 @@
 package com.cj4dplex.test.function;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.PrintWriter;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.Socket;
 import javax.swing.JTextArea;
 
 import com.cj4dplex.test.tcpserver.ServerResource;
+import com.cj4dplex.test.tfunction.TcpClientListUpdate;
+import com.cj4dplex.test.tfunction.TcpOutClient;
 import com.cj4dplex.test.udpserver.UdpResource;
 import com.cj4dplex.test.ufunction.ClientVO;
-import com.cj4dplex.test.ufunction.InClient;
-import com.cj4dplex.test.ufunction.OutClient;
+import com.cj4dplex.test.ufunction.UdpInClient;
+import com.cj4dplex.test.ufunction.UdpOutClient;
 
 public class ServerReceive {
 
 	public static final Runnable UdpReceive(DatagramSocket socket, DatagramPacket receivePacket, JTextArea textarea) {
 		return new Runnable() {
 			private String message = null;
-			private OutClient outClient = null;
-			InClient inClient = null;
+			private UdpOutClient outClient = null;
+			private UdpInClient inClient = null;
 
 			@Override
 			public void run() {
@@ -33,10 +31,10 @@ public class ServerReceive {
 						message = new String(receivePacket.getData(), 0, receivePacket.getLength(), "UTF-8");
 
 						if (message.equals("#exit#")) {
-							outClient = new OutClient(receivePacket);
+							outClient = new UdpOutClient(receivePacket);
 						} else {
 
-							inClient = new InClient(receivePacket);
+							inClient = new UdpInClient(receivePacket);
 							textarea.append(message + "\n");
 							System.out.println(message);
 
@@ -54,35 +52,40 @@ public class ServerReceive {
 		};
 	}
 
-	public static final Runnable TcpReceive(InputStream inputStream, JTextArea textarea) {
+	public static final Runnable TcpReceive(int clientNum, JTextArea textarea) {
 		return new Runnable() {
 			@Override
 			public void run() {
-				int size = -1;
+				int size = 0;
 				OutputStream outputStream = null;
-				System.out.println("##inputstream checkin1 = " + inputStream);
+				TcpOutClient outClient = null;
+				InputStream inputStream = null;
+				byte[] bt = new byte[256];
 				try {
-					//System.out.println("##inputstream first = " + inputStream.read());
-					//while ((size = inputStream.read()) != -1) {
-					while (inputStream != null) {
-						System.out.println("##inputstream checkin2 = " + inputStream);
-						//System.out.println("##inputstream = " + inputStream.read());
-						byte[] bt = new byte[256];
+					inputStream = ServerResource.getInstance().getClientList().get(clientNum).getInputStream();
 
-						size = inputStream.read(bt);
-						System.out.println(size);
-						
+					while (-1 != (size = inputStream.read(bt))) {
+
 						String output = new String(bt, 0, size, "utf-8");
-						
-						System.out.println("@@ServerReceive = " + output);
-						textarea.append(output+"\n");
-						for (Integer i : ServerResource.getInstance().getClientList().keySet()) {
 
+						if (output.equals("#exit#")) {
+							System.out.println("exit");
+							textarea.append(clientNum + "번 님이 종료하셨습니다 " + "\n");
+
+							outClient = new TcpOutClient(clientNum);
+							TcpClientListUpdate.getInstance().listUpdate();
+							break;
+						} else {
+							textarea.append(clientNum + "번 : " + output + "\n");
+						}
+
+						for (Integer i : ServerResource.getInstance().getClientList().keySet()) {
 							outputStream = ServerResource.getInstance().getClientList().get(i).getOutputStream();
-							Send.TcpSend(output, outputStream);
+							Send.TcpSend(clientNum + "번 :" + output, outputStream);
 						}
 
 					}
+					inputStream.close();
 				} catch (IOException e) {
 					e.printStackTrace();
 				}

@@ -1,15 +1,11 @@
 package com.cj4dplex.test.function;
 
-import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
+
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
-import java.net.Socket;
 import javax.swing.JTextArea;
-
 
 public class ClientReceive {
 
@@ -42,19 +38,29 @@ public class ClientReceive {
 			@Override
 			public void run() {
 				byte[] bt = new byte[256];
-				int size = -1;
+				int size = 0;
 				try {
-					while (null != inputStream) {
-						size = inputStream.read(bt);
+					while (-1 != (size = inputStream.read(bt))) {
+						// size = inputStream.read(bt);
 						String output = new String(bt, 0, size, "UTF-8");
+//						if (output.equals("#exitServer#")) {
+//							System.out.println("exitServer");
+//							inputStream.close();
+//							break;
+//						}
+						System.out.println("*clientReceive output");
 						System.out.println(output);
-						textArea.append(output+"\n");
+						textArea.append(output + "\n");
 					}
 				} catch (IOException e) {
-					System.out.println("서버종료되었습니다");
-					
-//					inputStream.close();
-//					interrupt();
+					try {
+						System.out.println("서버종료되었습니다");
+						textArea.append("서버종료되었습니다" + "\n");
+						inputStream.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
 					e.printStackTrace();
 				}
 			}
