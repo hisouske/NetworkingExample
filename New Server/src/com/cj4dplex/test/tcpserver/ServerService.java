@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.Set;
 
 import javax.swing.JTextArea;
 
@@ -45,16 +46,13 @@ public class ServerService {
 
 	}
 
-//	public void Send(String output) {
-//		for (Integer i : ServerResource.getInstance().getClientList().keySet()) {
-//			try {
-//				outputStream = ServerResource.getInstance().getClientList().get(i).getOutputStream();
-//				Send.TcpSend(output, outputStream);
-//				outputStream.close();
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	}
+	public void Send(String output) {
+		Set<Integer> test1 = ServerResource.getInstance().getClientList().keySet();
+		System.out.println("___________________check_______________");
+		System.out.println(test1);
+		for (Integer i : ServerResource.getInstance().getClientList().keySet()) {
+			Send.TcpSend(output, ServerResource.getInstance().getClientList().get(i));
+		}
+	}
 
 }

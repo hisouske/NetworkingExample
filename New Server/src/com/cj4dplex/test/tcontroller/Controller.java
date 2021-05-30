@@ -57,15 +57,22 @@ public class Controller implements ActionListener, WindowListener {
 	@Override
 	public void windowClosing(WindowEvent e) {
 		System.out.println("서버 종료 ");
+		serverView.setVisible(false);
 		try {
-			serverService.thread.sleep(50);
+			serverService.Send("exit()");
+			serverService.thread.sleep(10);
+			// for문 돌리는 이유?
+			/*
+			 * for (Integer i : ServerResource.getInstance().getClientList().keySet()) {
+			 * 
+			 * ServerResource.getInstance().getClientList().get(i).close();
+			 * 
+			 * }
+			 */
 			serverService.socket.close();
 			serverService.thread.interrupt();
-			for (Integer i : ServerResource.getInstance().getClientList().keySet()) {
+			System.exit(0);
 
-				ServerResource.getInstance().getClientList().get(i).close();
-
-			}
 		} catch (InterruptedException | IOException e1) {
 			e1.printStackTrace();
 		}

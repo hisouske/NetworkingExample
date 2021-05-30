@@ -57,20 +57,27 @@ public class ClientReceive {
 						// break;
 						// }
 						System.out.println("*clientReceive output");
+						if(output.equals("exit()")) {
+							break;
+						}
 						System.out.println(output);
 						textArea.append(output + "\n");
 					}
+					System.out.println("*************종료***********");
+					textArea.append("서버종료되었습니다" + "\n");
+					inputStream.close();
+					socket.close();
+					System.exit(0);
 				} catch (IOException e) {
 					System.out.println("*ClientReceive IOException check 1");
 					System.exit(0);
 					try {
-
 						System.out.println("서버종료되었습니다");
 						textArea.append("서버종료되었습니다" + "\n");
 						inputStream.close();
 						socket.close();
+						System.exit(0);
 					} catch (IOException e1) {
-						// TODO Auto-generated catch block
 						e1.printStackTrace();
 					}
 					e.printStackTrace();

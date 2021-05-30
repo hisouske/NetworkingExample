@@ -26,7 +26,7 @@ public class ClientSend {
 	// *이슈 = ClientSend error 서버 종료시에도 클라이언트 send 메서드 실행
 	public static final void TcpSend(String tcpMsg, Socket socket) {
 		try {
-
+			//3hand에서 파이프에 문제 체크
 			bt = tcpMsg.getBytes("utf-8");
 			System.out.println("@@Client TcpSend tcpMsg = "+tcpMsg);
 			

@@ -7,6 +7,8 @@ import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.Socket;
 
+import com.cj4dplex.test.tcpserver.ServerResource;
+
 public class Send {
 	private static String serverIP = "localhost";
 	private static byte[] bt = null;
@@ -21,13 +23,23 @@ public class Send {
 		}
 	}
 
-	public static final void TcpSend(String tcpMsg, OutputStream os) {
+	public static final void TcpSend(String tcpMsg, Socket socket) {
+		OutputStream outputStream = null;
 		try {
-			System.out.println("@@Server TcpSend >>"+tcpMsg);
+			outputStream = socket.getOutputStream();
+			System.out.println("@@Server TcpSend >>" + tcpMsg);
 			bt = tcpMsg.getBytes("UTF-8");
-			os.write(bt);
-			os.flush();
+			outputStream.write(bt);
+			outputStream.flush();
 		} catch (Exception e) {
+//			if (!socket.isClosed()) {
+//				try {
+//					outputStream.close();
+//					socket.close();
+//				} catch (IOException e1) {
+//					e1.printStackTrace();
+//				}
+//			}
 			e.printStackTrace();
 		}
 

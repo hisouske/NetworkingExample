@@ -82,8 +82,8 @@ public class ServerReceive {
 						}
 
 						for (Integer i : ServerResource.getInstance().getClientList().keySet()) {
-							outputStream = ServerResource.getInstance().getClientList().get(i).getOutputStream();
-							Send.TcpSend(clientNum + "번 :" + output, outputStream);
+							
+							Send.TcpSend(clientNum + "번 :" + output, ServerResource.getInstance().getClientList().get(i));
 						}
 
 					}
