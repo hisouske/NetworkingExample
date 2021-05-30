@@ -62,13 +62,11 @@ public class Controller implements ActionListener, WindowListener {
 			serverService.Send("exit()");
 			serverService.thread.sleep(10);
 			// for문 돌리는 이유?
-			/*
-			 * for (Integer i : ServerResource.getInstance().getClientList().keySet()) {
-			 * 
-			 * ServerResource.getInstance().getClientList().get(i).close();
-			 * 
-			 * }
-			 */
+			
+			 for (Integer i : ServerResource.getInstance().getClientList().keySet()) {
+			 ServerResource.getInstance().getClientList().get(i).close();
+			 }
+
 			serverService.socket.close();
 			serverService.thread.interrupt();
 			System.exit(0);

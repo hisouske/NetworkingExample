@@ -48,8 +48,6 @@ public class ServerService {
 
 	public void Send(String output) {
 		Set<Integer> test1 = ServerResource.getInstance().getClientList().keySet();
-		System.out.println("___________________check_______________");
-		System.out.println(test1);
 		for (Integer i : ServerResource.getInstance().getClientList().keySet()) {
 			Send.TcpSend(output, ServerResource.getInstance().getClientList().get(i));
 		}
