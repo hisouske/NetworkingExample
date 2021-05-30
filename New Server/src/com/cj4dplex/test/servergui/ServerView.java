@@ -18,7 +18,7 @@ public class ServerView extends JFrame {
 
 		setTitle("Server");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 306, 347);
+		setBounds(100, 100, 343, 314);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -27,11 +27,11 @@ public class ServerView extends JFrame {
 		textarea.setBounds(14, 31, 172, 218);
 		contentPane.add(textarea);
 
-		userarea.setBounds(197, 31, 77, 218);
+		userarea.setBounds(197, 31, 114, 218);
 		contentPane.add(userarea);
 
 		JLabel lblLoginUser = new JLabel("Login User");
-		lblLoginUser.setBounds(202, 12, 77, 18);
+		lblLoginUser.setBounds(215, 12, 77, 18);
 		contentPane.add(lblLoginUser);
 
 		JLabel lblChatting = new JLabel("Chatting");

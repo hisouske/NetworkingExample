@@ -35,11 +35,11 @@ public class ServerReceive {
 						} else {
 
 							inClient = new UdpInClient(receivePacket);
-							textarea.append(message + "\n");
+							textarea.append(receivePacket.getAddress()+"/"+receivePacket.getPort()+" :"+message + "\n");
 							System.out.println(message);
 
 							for (ClientVO client : UdpResource.getInstance().getClientList()) {
-								Send.UdpSend(message, client.getPort(), socket);
+								Send.UdpSend(receivePacket.getAddress()+"/"+receivePacket.getPort()+" :"+message, client.getPort(), socket);
 							}
 
 						}

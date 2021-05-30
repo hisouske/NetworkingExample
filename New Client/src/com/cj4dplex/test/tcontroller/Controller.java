@@ -46,7 +46,6 @@ public class Controller implements ActionListener, WindowListener {
 			System.out.println(getTextField);
 			//이슈 = clientService.msgSend가 서버쪽에서 종료시 닫히도록 수정 요청
 			clientService.msgSend(getTextField);
-			//if(clientService.inpu)
 			clientView.textField.setText("");
 		}
 

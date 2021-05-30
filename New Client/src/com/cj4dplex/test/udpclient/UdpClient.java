@@ -23,7 +23,7 @@ public class UdpClient {
 		try {
 			this.port = port;
 			socket = new DatagramSocket();
-
+			msgSend("입장");
 		} catch (SocketException e) {
 			e.printStackTrace();
 		}
