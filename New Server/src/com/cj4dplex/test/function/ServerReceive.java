@@ -63,8 +63,10 @@ public class ServerReceive {
 				byte[] bt = new byte[256];
 				try {
 					inputStream = ServerResource.getInstance().getClientList().get(clientNum).getInputStream();
-
+					
 					while (-1 != (size = inputStream.read(bt))) {
+						System.out.println(inputStream);
+						System.out.println("exit");
 
 						String output = new String(bt, 0, size, "utf-8");
 
@@ -85,8 +87,9 @@ public class ServerReceive {
 						}
 
 					}
-					inputStream.close();
 				} catch (IOException e) {
+					//ServiceReceive Socket closed Exception > System.exit()
+					System.exit(0);
 					e.printStackTrace();
 				}
 			}

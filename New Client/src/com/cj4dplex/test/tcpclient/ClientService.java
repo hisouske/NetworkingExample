@@ -25,28 +25,35 @@ import com.cj4dplex.test.function.ClientSend;
 public class ClientService {
 	private PrintWriter printWriter = null;
 	private Socket socket = null;
-	private OutputStream outputStream = null;
-	private InputStream inputStream = null;
+//	private OutputStream outputStream = null;
+//	private InputStream inputStream = null;
 	public Thread thread = null;
 	private JTextArea textarea = null;
 
 	public ClientService(Socket s) throws IOException {
 		this.socket = s;
-		outputStream = socket.getOutputStream();
-		inputStream = socket.getInputStream();
+//		outputStream = socket.getOutputStream();
+//		inputStream = socket.getInputStream();
 		// try {
 
 	}
 
 
 	public void msgSend(String text) {
-		ClientSend.TcpSend(text, outputStream);
+		boolean check = socket.isConnected();
+		System.out.println("!!서버에 접속 확인.");
+		System.out.println(check);
+		if (check == false) {
+			System.out.println("!!서버에 접속 할 수 없습니다. 확인바랍니다.");
+			System.exit(0);
+		}
+		ClientSend.TcpSend(text, socket);
 	}
 
 
 	public void receiveReady(JTextArea textArea) {
 		this.textarea = textArea;
-		thread = new Thread(ClientReceive.TcpReceive(inputStream, textArea));
+		thread = new Thread(ClientReceive.TcpReceive(socket, textArea));
 		thread.start();
 		
 		
