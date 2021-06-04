@@ -5,11 +5,16 @@ import java.io.InputStream;
 
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
 import java.net.Socket;
 
 import javax.swing.JTextArea;
 
 public class ClientReceive {
+
+	private static String serverIP = "localhost";
+
 
 	public static final Runnable UdpReceive(DatagramSocket socket, DatagramPacket receivePacket, JTextArea textarea) {
 
@@ -22,6 +27,7 @@ public class ClientReceive {
 				while (true) {
 					try {
 						socket.receive(receivePacket);
+						System.out.println(receivePacket.getData() + "/" + receivePacket.getLength());
 						message = new String(receivePacket.getData(), 0, receivePacket.getLength(), "UTF-8");
 						textarea.append(message + "\n");
 						System.out.println(message);
@@ -46,18 +52,11 @@ public class ClientReceive {
 				try {
 					inputStream = socket.getInputStream();
 					while (-1 != (size = inputStream.read(bt))) {
-						// size = inputStream.read(bt);
-
-						System.out.println(inputStream);
 
 						String output = new String(bt, 0, size, "UTF-8");
-						// if (output.equals("#exitServer#")) {
-						// System.out.println("exitServer");
-						// inputStream.close();
-						// break;
-						// }
+
 						System.out.println("*clientReceive output");
-						if(output.equals("exit()")) {
+						if (output.equals("exit()")) {
 							break;
 						}
 						System.out.println(output);

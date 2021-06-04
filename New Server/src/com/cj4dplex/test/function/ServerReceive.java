@@ -5,17 +5,64 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.DatagramPacket;
 import java.net.DatagramSocket;
+import java.net.InetAddress;
+import java.net.MulticastSocket;
+
 import javax.swing.JTextArea;
 
+import com.cj4dplex.test.tcpfunction.TcpClientListUpdate;
+import com.cj4dplex.test.tcpfunction.TcpOutClient;
 import com.cj4dplex.test.tcpserver.ServerResource;
-import com.cj4dplex.test.tfunction.TcpClientListUpdate;
-import com.cj4dplex.test.tfunction.TcpOutClient;
+import com.cj4dplex.test.udpfunction.ClientVO;
+import com.cj4dplex.test.udpfunction.UdpInClient;
+import com.cj4dplex.test.udpfunction.UdpOutClient;
 import com.cj4dplex.test.udpserver.UdpResource;
-import com.cj4dplex.test.ufunction.ClientVO;
-import com.cj4dplex.test.ufunction.UdpInClient;
-import com.cj4dplex.test.ufunction.UdpOutClient;
 
 public class ServerReceive {
+	
+	
+	private static String serverIP = "localhost";
+	
+	
+//	public  Runnable ServerReceive(int port) {
+//	return new Runnable() {
+//		@Override
+//		public void run() {
+//			try { 
+//				MulticastSocket ms = new MulticastSocket(port); 
+//				InetAddress ia = InetAddress.getByName(serverIP); 
+//				
+//				ms.joinGroup(ia); 
+//				
+//				byte data[] = new byte[512]; 
+//				
+//				DatagramPacket dp = new DatagramPacket(data, data.length); 
+//				
+//				System.out.println("받기 대기중"); 
+//				ms.receive(dp);
+//				byte receiveData[] = dp.getData(); 
+//				int receiveCount = dp.getLength(); 
+//				System.out.println("받은 문자-->"+ new String(receiveData,0,receiveData.length)); 
+//			}catch(Exception e) { 
+//		e.printStackTrace(); 
+//		}
+//
+//		
+//	} 
+//};
+//}
+//	
+//	
+//	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 
 	public static final Runnable UdpReceive(DatagramSocket socket, DatagramPacket receivePacket, JTextArea textarea) {
 		return new Runnable() {
@@ -83,7 +130,7 @@ public class ServerReceive {
 
 						for (Integer i : ServerResource.getInstance().getClientList().keySet()) {
 							
-							Send.TcpSend(clientNum + "번 :" + output, ServerResource.getInstance().getClientList().get(i));
+//							Send.TcpSend(clientNum + "번 :" + output, ServerResource.getInstance().getClientList().get(i));
 						}
 
 					}
@@ -95,4 +142,17 @@ public class ServerReceive {
 			}
 		};
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
 }

@@ -1,6 +1,6 @@
 package com.cj4dplex.test.tcpserver;
 
-import com.cj4dplex.test.sconnect.ServerConnect;
+import com.cj4dplex.test.serverconnect.ServerConnect;
 
 public class ServerMain {
 

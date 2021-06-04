@@ -31,6 +31,7 @@ public class UdpClient {
 
 	public void msgSend(String text) {
 		ClientSend.UdpSend(text, port, socket);
+
 	}
 
 	public void receiveReady(JTextArea textArea) {

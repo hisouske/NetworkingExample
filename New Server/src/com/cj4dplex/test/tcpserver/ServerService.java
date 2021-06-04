@@ -11,7 +11,7 @@ import javax.swing.JTextArea;
 import com.cj4dplex.test.function.Send;
 import com.cj4dplex.test.function.ServerReceive;
 import com.cj4dplex.test.serverif.ServerInterface;
-import com.cj4dplex.test.tfunction.TcpClientListUpdate;
+import com.cj4dplex.test.tcpfunction.TcpClientListUpdate;
 
 public class ServerService {
 	private int clientNum;
@@ -27,6 +27,7 @@ public class ServerService {
 	public ServerService(int cNum) throws IOException {
 		this.clientNum = cNum;
 		this.socket = ServerResource.getInstance().getClientList().get(clientNum);
+//		Send.TcpSend("MultiCast TEST", socket);
 		// socket.setSoTimeout(timeout);
 		// 지정 된 시간만큼 기다렸다가 Exception으로 빠짐
 		tcpClientListUpdate = TcpClientListUpdate.getInstance();
@@ -35,9 +36,10 @@ public class ServerService {
 
 	public void receiveReady(JTextArea textArea) {
 		this.textArea = textArea;
-		thread = new Thread(ServerReceive.TcpReceive(clientNum, textArea));
-		thread.start();
 
+		 thread = new Thread(ServerReceive.TcpReceive(clientNum, textArea));
+		 thread.start();
+	
 	}
 
 	public void userAreaReady(JTextArea userArea) {
@@ -47,7 +49,7 @@ public class ServerService {
 	}
 
 	public void Send(String output) {
-		Set<Integer> test1 = ServerResource.getInstance().getClientList().keySet();
+//		Set<Integer> test1 = ServerResource.getInstance().getClientList().keySet();
 		for (Integer i : ServerResource.getInstance().getClientList().keySet()) {
 			Send.TcpSend(output, ServerResource.getInstance().getClientList().get(i));
 		}

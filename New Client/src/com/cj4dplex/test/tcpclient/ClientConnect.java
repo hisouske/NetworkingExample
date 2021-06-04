@@ -9,7 +9,7 @@ import java.net.UnknownHostException;
 import java.util.Scanner;
 
 import com.cj4dplex.test.clientif.ClientInterface;
-import com.cj4dplex.test.tcontroller.Controller;
+import com.cj4dplex.test.tcpcontroller.Controller;
 
 public class ClientConnect {
 	private Socket socket = null;
@@ -20,9 +20,9 @@ public class ClientConnect {
 		try {
 			if (null == socket) {
 				socket = new Socket();
-				socket.connect(new InetSocketAddress("localhost", 8889));
+				socket.connect(new InetSocketAddress("localhost", 1112));
 				clientservice = new ClientService(socket);
-				Controller controller = new Controller(clientservice);
+				 new Controller(clientservice);
 			}
 
 		} catch (ConnectException ex) {

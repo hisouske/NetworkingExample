@@ -25,19 +25,14 @@ import com.cj4dplex.test.function.ClientSend;
 public class ClientService {
 	private PrintWriter printWriter = null;
 	private Socket socket = null;
-//	private OutputStream outputStream = null;
-//	private InputStream inputStream = null;
+
 	public Thread thread = null;
 	private JTextArea textarea = null;
 
 	public ClientService(Socket s) throws IOException {
 		this.socket = s;
-//		outputStream = socket.getOutputStream();
-//		inputStream = socket.getInputStream();
-		// try {
 
 	}
-
 
 	public void msgSend(String text) {
 		boolean check = socket.isConnected();
@@ -48,15 +43,13 @@ public class ClientService {
 			System.exit(0);
 		}
 		ClientSend.TcpSend(text, socket);
-	}
 
+	}
 
 	public void receiveReady(JTextArea textArea) {
 		this.textarea = textArea;
 		thread = new Thread(ClientReceive.TcpReceive(socket, textArea));
 		thread.start();
-		
-		
 
 	}
 
