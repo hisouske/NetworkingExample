@@ -26,7 +26,6 @@ public class ConnectTcpServiceImpl implements ConnectClient {
 			try {
 				Thread.sleep(5000);
 				socket.close();
-				// GUI 종료 처리 필요
 			} catch (InterruptedException | IOException e) {
 				e.printStackTrace();
 			}
@@ -42,18 +41,22 @@ public class ConnectTcpServiceImpl implements ConnectClient {
 				try {
 					final BufferedReader bufferedReader = new BufferedReader(
 							new InputStreamReader(socket.getInputStream()));
-
 					while (!Thread.currentThread().isInterrupted()) {
-					
-						System.out.println(bufferedReader);
 						final String message = bufferedReader.readLine();
 						System.out.println("Server :" + message);
-					
+
 						new ClientController().messageView(Color.black, 11, message);
 
 					}
 
 				} catch (IOException e) {
+					try {
+						Thread.sleep(500);
+						Thread.interrupted();
+						System.exit(0);
+					} catch (InterruptedException e1) {
+						e1.printStackTrace();
+					}
 					e.printStackTrace();
 				}
 			}

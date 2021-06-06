@@ -1,5 +1,6 @@
 package com.cj4dplex.socket.test.client.main;
 
+import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 
@@ -23,7 +24,6 @@ public class ClientMain {
 		try {
 
 			UIManager.setLookAndFeel(new NimbusLookAndFeel());
-
 			UIManager.put("FileChooser.readOnly", Boolean.TRUE);
 			UIManager.put("SplitPane:SplitPaneDivider[Enabled].backgroundPainter", new Painter<Object>() {
 				@Override
@@ -33,6 +33,19 @@ public class ClientMain {
 					graphics2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
 				}
 			});
+			UIManager.put("SplitPane:SplitPaneDivider[Enabled].backgroundPainter", new Painter<Object>() {
+				@Override
+				public void paint(Graphics2D graphics2d, Object object, int width, int height) {
+					graphics2d.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
+							RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+					graphics2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+					graphics2d.setColor(new Color(0, 0, 0));
+					graphics2d.fillRect(0, 0, width, height);
+				}
+			});
+
+			UIManager.getLookAndFeelDefaults().put("Button.background", Color.darkGray);
+			UIManager.getLookAndFeelDefaults().put("Button.textForeground", Color.white);
 		} catch (UnsupportedLookAndFeelException e) {
 			e.printStackTrace();
 		}
@@ -42,7 +55,7 @@ public class ClientMain {
 		ClientResouce.getInstance().getUdp().Receive();
 		ClientResouce.getInstance().getTcp().Receive();
 
-//		new IntegratedClient();
+		// new IntegratedClient();
 		SwingUtilities.invokeLater(new Runnable() {
 			@Override
 			public void run() {

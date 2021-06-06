@@ -41,7 +41,6 @@
 <fullyQualifiedTypeName name="javax.swing.ButtonGroup"/>
 <fullyQualifiedTypeName name="java.net.DatagramPacket"/>
 <fullyQualifiedTypeName name="java.awt.event.ActionListener"/>
-<fullyQualifiedTypeName name="java.lang.Thread"/>
 <fullyQualifiedTypeName name="java.io.IOException"/>
 <fullyQualifiedTypeName name="javax.swing.JTextField"/>
 <fullyQualifiedTypeName name="javax.swing.JTextArea"/>
@@ -51,13 +50,14 @@
 <fullyQualifiedTypeName name="com.cj4dplex.socket.test.client.main.ClientViewCenter"/>
 <fullyQualifiedTypeName name="java.awt.BorderLayout"/>
 <fullyQualifiedTypeName name="javax.swing.JFrame"/>
-<fullyQualifiedTypeName name="javax.swing.JPanel"/>
 <fullyQualifiedTypeName name="com.cj4dplex.socket.test.client.integrated.ConnectTcpServiceImpl"/>
-<fullyQualifiedTypeName name="java.lang.System"/>
 <fullyQualifiedTypeName name="java.lang.Runnable"/>
 <fullyQualifiedTypeName name="com.cj4dplex.socket.test.client.integrated.IntegratedClient"/>
 <fullyQualifiedTypeName name="com.cj4dplex.socket.test.client.interf.ConnectClient"/>
 <fullyQualifiedTypeName name="com.cj4dplex.socket.test.client.connect.ClientConnect"/>
 <fullyQualifiedTypeName name="java.net.Socket"/>
 <fullyQualifiedTypeName name="com.cj4dplex.socket.test.client.controller.ClientController"/>
+<fullyQualifiedTypeName name="java.lang.System"/>
+<fullyQualifiedTypeName name="javax.swing.JPanel"/>
+<fullyQualifiedTypeName name="java.lang.Thread"/>
 </qualifiedTypeNameHistroy>

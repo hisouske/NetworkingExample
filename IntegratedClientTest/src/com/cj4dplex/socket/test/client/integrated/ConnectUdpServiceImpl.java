@@ -7,6 +7,7 @@ import java.net.DatagramSocket;
 import java.net.InetSocketAddress;
 import java.net.SocketException;
 
+import com.cj4dplex.socket.test.client.controller.ClientController;
 import com.cj4dplex.socket.test.client.interf.ConnectClient;
 
 public class ConnectUdpServiceImpl implements ConnectClient {
@@ -29,7 +30,6 @@ public class ConnectUdpServiceImpl implements ConnectClient {
 	@Override
 	public void Send(String msg) {
 		try {
-			System.out.println(msg);
 			byte[] bt = msg.getBytes();
 			datagramPacket = new DatagramPacket(bt, bt.length, new InetSocketAddress(address, port));
 			datagramSocket.send(datagramPacket);
@@ -54,7 +54,8 @@ public class ConnectUdpServiceImpl implements ConnectClient {
 						do {
 							String getData = new String(datagramPacket.getData());
 							stringBuffer.append(getData);
-							System.out.println(stringBuffer);
+							System.out.println(getData);
+							new ClientController().messageView(Color.black, 11, getData);
 
 						} while ("\\n".equals(new String(datagramPacket.getData())));
 

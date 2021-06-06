@@ -60,9 +60,8 @@ public class ClientSocket {
 		} else {
 			final DatagramSocket datagramSocket = (DatagramSocket) object;
 			this.udpOrTcp = false;
-			if (null != datagramSocket.getRemoteSocketAddress()) {
-				this.ipAddressAndPort = datagramSocket.getRemoteSocketAddress().toString();
-			}
+			this.ipAddressAndPort = "Common UDP Port";
+
 			final byte[] iOneByte = new byte[1];
 			this.oInput = iOneByte;
 		}
@@ -85,25 +84,24 @@ public class ClientSocket {
 
 						try {
 							final String message = bufferedReader.readLine();
-							System.out.println(message);
 							if (uiSelected) {
 								new JSplitPaneCenterCmd().messageView(Color.black, 11,
 										((Socket) object).getRemoteSocketAddress() + ">" + message);
 							}
-							System.out.println(message);
 
-							printWriter.print(String.format("Server> %s", message));
+							printWriter.println(String.format("Server> %s", message));
 							printWriter.flush();
 						} catch (IOException e) {
-							e.printStackTrace();
 							try {
+								System.out.println("Server Exit");
 
-								Thread.sleep(5000);
-								// Thread.interrupted();
-								// System.exit(0);
+								Thread.sleep(500);
+								Thread.interrupted();
+								System.exit(0);
 							} catch (InterruptedException e1) {
 								e1.printStackTrace();
 							}
+							e.printStackTrace();
 
 						}
 					}
@@ -122,15 +120,15 @@ public class ClientSocket {
 							do {
 								String getData = new String(datagramPacket.getData());
 								stringBuffer.append(getData);
-								System.out.println(stringBuffer);
 
-							} while ("\\n".equals(new String(datagramPacket.getData())));
+							} while ("\n".equals(new String(datagramPacket.getData())));
 
 							if (uiSelected) {
-								new JSplitPaneCenterCmd().messageView(Color.black, 11, stringBuffer.toString());
+								new JSplitPaneCenterCmd().messageView(Color.black, 11,
+										datagramPacket.getSocketAddress() + ">" + stringBuffer.toString());
 							}
 
-							final byte[] sendByte = stringBuffer.toString().getBytes();
+							final byte[] sendByte = ("Server>" + stringBuffer).toString().getBytes();
 							final DatagramPacket sendPacket = new DatagramPacket(sendByte, sendByte.length,
 									datagramPacket.getAddress(), datagramPacket.getPort());
 							datagramSocket.send(sendPacket);

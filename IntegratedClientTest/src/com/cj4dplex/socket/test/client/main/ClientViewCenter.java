@@ -4,6 +4,7 @@ import java.awt.Font;
 
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
@@ -14,9 +15,8 @@ import com.cj4dplex.socket.test.client.controller.ClientController;
 
 public class ClientViewCenter extends JSplitPane {
 
-	
 	private static final long serialVersionUID = -3434627225007495866L;
-	
+
 	private volatile static ClientViewCenter object = null;
 
 	public static ClientViewCenter getInstance() {
@@ -37,37 +37,43 @@ public class ClientViewCenter extends JSplitPane {
 	public JRadioButton rdbtnTcp = null;
 	public JRadioButton rdbtnUdp = null;
 	public JTextPane textPane = null;
+	public JPanel jPanel = null;
 	private ClientController clientController = null;
 
 	public ClientViewCenter() {
 		setOrientation(JSplitPane.VERTICAL_SPLIT);
-		setResizeWeight(0.95F);
-		
+		setResizeWeight(0.7F);
+
 		textField = new JTextField();
-		textField.setBounds(5, 246, 335, 30);
-		jTextPane.add(textField);
+		textField.setBounds(10, 38, 262, 30);
+//		jTextPane.add(textField);
 		textField.setColumns(10);
 		btnSend = new JButton("Send");
-		btnSend.setBounds(269, 245, 75, 25);
-
+		btnSend.setBounds(276, 38, 67, 30);
 
 		rdbtnTcp = new JRadioButton("TCP");
-		rdbtnTcp.setBounds(14, 8, 57, 27);
-		jTextPane.add(rdbtnTcp);
+		rdbtnTcp.setBounds(10, 8, 57, 27);
+//		jTextPane.add(rdbtnTcp);
 
 		rdbtnUdp = new JRadioButton("UDP");
 		rdbtnUdp.setSelected(true);
-		rdbtnUdp.setBounds(77, 8, 75, 27);
-		jTextPane.add(rdbtnUdp);
+		rdbtnUdp.setBounds(69, 8, 59, 27);
+//		jTextPane.add(rdbtnUdp);
 
 		radioGroup = new ButtonGroup();
 		radioGroup.add(rdbtnTcp);
 		radioGroup.add(rdbtnUdp);
+		jPanel = new JPanel();
+		jPanel.setLayout(null);
+		jPanel.add(rdbtnTcp);
+		jPanel.add(rdbtnUdp);
+		jPanel.add(textField);
+		jPanel.add(btnSend);
 
-//		textPane = new JTextPane();
-//		textPane.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
-//		textPane.setBounds(14, 34, 328, 200);
-//		textPane.setEditable(false);
+		// textPane = new JTextPane();
+		// textPane.setFont(new Font("맑은 고딕", Font.PLAIN, 15));
+		// textPane.setBounds(14, 34, 328, 200);
+		// textPane.setEditable(false);
 
 		clientController = new ClientController();
 		btnSend.addActionListener(clientController);
@@ -77,9 +83,9 @@ public class ClientViewCenter extends JSplitPane {
 		jTextPane.setFocusable(false);
 		jTextPane.setOpaque(false);
 		jTextPane.setEditable(false);
-//		jTextPane.add(textPane);
+		// jTextPane.add(textPane);
 		setTopComponent(new JScrollPane(jTextPane));
-		setBottomComponent(btnSend);
+		setBottomComponent(jPanel);
 
 	}
 }
